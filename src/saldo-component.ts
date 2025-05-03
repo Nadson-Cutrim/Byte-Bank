@@ -1,19 +1,14 @@
-let saldo:number = 3000;
+let saldo: number = 3000;
 
 const elementoSaldo = document.querySelector(".saldo-valor .valor") as HTMLElement;
 const elementoDataAcesso = document.querySelector(".block-saldo time") as HTMLElement;
 
 if(elementoSaldo != null){
-    elementoSaldo.textContent = saldo.toLocaleString('pt-BR',{currency: 'BRl',style: 'currency'});
+    elementoSaldo.textContent = formatarMoeda(saldo);
 }
 
 if(elementoDataAcesso != null){
     const dataAcesso:Date = new Date();
-    elementoDataAcesso.textContent = dataAcesso.toLocaleDateString('pt-BR', {
-        weekday: 'long',
-        day: '2-digit',
-        month: '2-digit', 
-        year: 'numeric'
-    });
+    elementoDataAcesso.textContent = formatarData(dataAcesso);
 
-    }
+}
