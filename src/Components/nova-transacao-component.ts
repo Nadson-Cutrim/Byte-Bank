@@ -1,7 +1,8 @@
 
 import { Transacao } from "../types/Transacao.js";
 import { TipoTransacao } from "../types/TipoTransacao.js";
-import { atualizarSaldo, getSaldo } from "./saldo-component.js";
+import Conta from "../types/Conta.js";
+import SaldoComponent from "./saldo-component.js";
 
 
 const elementoFormulario = document.querySelector(".block-nova-transacao form") as HTMLFormElement;
@@ -18,18 +19,6 @@ const inputData = elementoFormulario.querySelector("#data") as HTMLInputElement;
 let tipoTransacao: TipoTransacao = inputTipoTrasacao.value as TipoTransacao;
 let valor: number = inputValor.valueAsNumber;
 let data: Date = new Date(inputData.value);
-let saldo: number = getSaldo();
-
-if (tipoTransacao === TipoTransacao.DEPOSITO) {
-    saldo += valor;
-}else if (tipoTransacao === TipoTransacao.TRANSFERENCIA || tipoTransacao === TipoTransacao.PAGAMENTO_BOLETO) {
-    saldo -= valor;
-}else{
-    alert("Tipo de transação inválido!");
-    return;
-}
-
-atualizarSaldo(saldo); // Atualiza o saldo na tela
 
 const novaTransacao:Transacao = {
     tipoTransacao: tipoTransacao,
@@ -37,6 +26,7 @@ const novaTransacao:Transacao = {
     data: data
     
 }
-console.log(novaTransacao);
+Conta.registrarTrasacao(novaTransacao); // Atualiza o saldo na conta
+SaldoComponent.atualizar(); // Atualiza o saldo na tela
 elementoFormulario.reset(); // Limpa os campos do formulário
 })
