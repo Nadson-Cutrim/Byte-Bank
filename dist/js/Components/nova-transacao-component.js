@@ -2,7 +2,7 @@ import Conta from "../types/Conta.js";
 import SaldoComponent from "./saldo-component.js";
 import ExtratoComponent from "./extrato-component.js";
 const elementoFormulario = document.querySelector(".block-nova-transacao form");
-elementoFormulario.addEventListener('submit', function (event) {
+elementoFormulario.addEventListener("submit", function (event) {
     try {
         event.preventDefault(); // Evita o envio do formulário
         if (!elementoFormulario.checkValidity()) {
@@ -18,7 +18,7 @@ elementoFormulario.addEventListener('submit', function (event) {
         const novaTransacao = {
             tipoTransacao: tipoTransacao,
             valor: valor,
-            data: data
+            data: data,
         };
         Conta.registrarTrasacao(novaTransacao); // Atualiza o saldo na conta
         SaldoComponent.atualizar(); // Atualiza o saldo na tela
