@@ -1,11 +1,12 @@
+import { Armazenador } from "./Armazenador.js";
 import { GrupoTransacao } from "./GrupoTransacao.js";
 import { TipoTransacao } from "./TipoTransacao.js";
 import { Transacao } from "./Transacao.js";
 
 export class Conta {
  protected   nome: string
-   protected saldo: number = JSON.parse(localStorage.getItem("saldo")) || 0;
-    protected transacoes: Transacao[] = JSON.parse(localStorage.getItem("transacoes"), (key: string, value: any)=>{
+   protected saldo: number = Armazenador.obter("saldo") || 0;
+    protected transacoes: Transacao[] = Armazenador.obter(("transacoes"), (key: string, value: any)=>{
         if(key ==='data'){
             return new Date(value);
         }
@@ -66,7 +67,7 @@ export class Conta {
    
      
        this.transacoes.push(novaTransacao); // Adiciona a nova transação ao array de transações
-       localStorage.setItem("transacoes", JSON.stringify(this.transacoes)); // Salva as transações no localStorage
+      Armazenador.salvar("transacoes", JSON.stringify(this.transacoes)); // Salva as transações no localStorage
        console.log(this.getGruposTransacoes()); // Exibe os grupos de transações no console para depuração
    
    }
@@ -81,7 +82,7 @@ export class Conta {
     }
 
     this.saldo -= valor;
-    localStorage.setItem("saldo", JSON.stringify(this.saldo)); // Atualiza o saldo no localStorage
+   Armazenador.salvar("saldo", JSON.stringify(this.saldo)); // Atualiza o saldo no localStorage
 }
 
 depositar(valor: number): void {
@@ -89,7 +90,7 @@ depositar(valor: number): void {
         throw new Error("O valor a ser depositado deve ser maior que zero!");
     }
     this.saldo += valor;
-    localStorage.setItem("saldo", JSON.stringify(this.saldo)); // Atualiza o saldo no localStorage
+    Armazenador.salvar("saldo", JSON.stringify(this.saldo)); // Atualiza o saldo no localStorage
 }
 
 }
