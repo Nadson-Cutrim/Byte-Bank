@@ -94,6 +94,17 @@ depositar(valor: number): void {
 }
 
 }
+export class ContaPremium{
+
+    registrarTransacao(transacao: Transacao): void {
+        if(transacao.tipoTransacao === TipoTransacao.DEPOSITO){
+            console.log("Gangou um bônus de 0.50 centavos por depósito!");
+            transacao.valor += 0.5; // Adiciona o bônus de 0.50 centavos ao valor do depósito
+        }
+        this.registrarTransacao(transacao); // Chama o método registrarTransacao da classe Conta
+    }
+}
 
 const conta = new Conta("Lucas Alves Cutrim");
+const contaPremium = new ContaPremium("Nadson Cutrim");
 export default conta;
