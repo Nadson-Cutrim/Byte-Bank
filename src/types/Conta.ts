@@ -1,4 +1,5 @@
 import { Armazenador } from "./Armazenador.js";
+import { ValidaDebito } from "./Decorators.js";
 import { GrupoTransacao } from "./GrupoTransacao.js";
 import { TipoTransacao } from "./TipoTransacao.js";
 import { Transacao } from "./Transacao.js";
@@ -71,18 +72,11 @@ export class Conta {
        console.log(this.getGruposTransacoes()); // Exibe os grupos de transações no console para depuração
    
    }
-
+   @ValidaDebito
+   
    debitar(valor: number): void {
-    if(valor <= 0){
-        throw new Error("O valor a ser debitado deve ser maior que zero!");
-    }
-
-    if(valor > this.saldo){
-        throw new Error("Saldo insuficiente!");
-    }
-
     this.saldo -= valor;
-   Armazenador.salvar("saldo", JSON.stringify(this.saldo)); // Atualiza o saldo no localStorage
+    Armazenador.salvar("saldo", JSON.stringify(this.saldo)); // Atualiza o saldo no localStorage
 }
 
 depositar(valor: number): void {
