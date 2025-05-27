@@ -94,14 +94,14 @@ depositar(valor: number): void {
 }
 
 }
-export class ContaPremium{
+export class ContaPremium extends Conta {
 
     registrarTransacao(transacao: Transacao): void {
         if(transacao.tipoTransacao === TipoTransacao.DEPOSITO){
             console.log("Gangou um bônus de 0.50 centavos por depósito!");
             transacao.valor += 0.5; // Adiciona o bônus de 0.50 centavos ao valor do depósito
         }
-        this.registrarTransacao(transacao); // Chama o método registrarTransacao da classe Conta
+        super.registrarTrasacao(transacao); // Chama o método da classe pai para registrar a transação
     }
 }
 
