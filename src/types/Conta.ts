@@ -1,5 +1,5 @@
 import { Armazenador } from "./Armazenador.js";
-import { ValidaDebito } from "./Decorators.js";
+import { ValidaDebito, ValidaTransacao } from "./Decorators.js";
 import { GrupoTransacao } from "./GrupoTransacao.js";
 import { TipoTransacao } from "./TipoTransacao.js";
 import { Transacao } from "./Transacao.js";
@@ -52,21 +52,8 @@ export class Conta {
    getDatadeAcesso(): Date {
     return new Date();
    }
-
+@ValidaTransacao
    registrarTrasacao(novaTransacao: Transacao): void {
-   
-       if (novaTransacao.tipoTransacao === TipoTransacao.DEPOSITO) {
-          this.depositar(novaTransacao.valor);
-       }
-       else if (novaTransacao.tipoTransacao === TipoTransacao.TRANSFERENCIA || novaTransacao.tipoTransacao === TipoTransacao.PAGAMENTO_BOLETO) {
-           this.debitar(novaTransacao.valor);
-           novaTransacao.valor *= -1; // Inverte o valor da transação para que fique negativo
-       }
-       else {
-           throw new Error("Tipo de transação inválido!");
-       }
-   
-     
     this.transacoes.push(novaTransacao); // Adiciona a nova transação ao array de transações
     Armazenador.salvar("transacoes", JSON.stringify(this.transacoes)); // Salva as transações no localStorage
     console.log(this.getGruposTransacoes()); // Exibe os grupos de transações no console para depuração
