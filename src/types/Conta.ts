@@ -67,25 +67,21 @@ export class Conta {
        }
    
      
-       this.transacoes.push(novaTransacao); // Adiciona a nova transação ao array de transações
-      Armazenador.salvar("transacoes", JSON.stringify(this.transacoes)); // Salva as transações no localStorage
-       console.log(this.getGruposTransacoes()); // Exibe os grupos de transações no console para depuração
-   
-   }
+    this.transacoes.push(novaTransacao); // Adiciona a nova transação ao array de transações
+    Armazenador.salvar("transacoes", JSON.stringify(this.transacoes)); // Salva as transações no localStorage
+    console.log(this.getGruposTransacoes()); // Exibe os grupos de transações no console para depuração
+}
+
    @ValidaDebito
-   
    debitar(valor: number): void {
     this.saldo -= valor;
     Armazenador.salvar("saldo", JSON.stringify(this.saldo)); // Atualiza o saldo no localStorage
 }
-
-depositar(valor: number): void {
-    if(valor <= 0){
-        throw new Error("O valor a ser depositado deve ser maior que zero!");
+    @ValidaDebito
+    depositar(valor: number): void {
+        this.saldo += valor;
+        Armazenador.salvar("saldo", JSON.stringify(this.saldo)); // Atualiza o saldo no localStorage
     }
-    this.saldo += valor;
-    Armazenador.salvar("saldo", JSON.stringify(this.saldo)); // Atualiza o saldo no localStorage
-}
 
 }
 export class ContaPremium extends Conta {
